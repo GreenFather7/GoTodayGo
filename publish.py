@@ -10,6 +10,7 @@ import secrets
 import subprocess
 import sys
 import unicodedata
+from collections import Counter
 from datetime import datetime, timezone
 from http.client import HTTPException
 from pathlib import Path
@@ -23,6 +24,8 @@ from archive import text_digest
 CHANNEL = "@GoTodayGo"
 CATALOG = Path(__file__).resolve().with_name("cards.json")
 STATE = "publication-state.json"
+# Slot zero is 01:18 UTC. These offsets correspond to 16:18, 19:18 and 22:18 in Moscow.
+EVENING_OFFSETS = (4, 5, 6)
 
 
 def slot(when):
@@ -44,6 +47,8 @@ def render(post):
     author = post.get("author", "")
     if not isinstance(author, str):
         raise ValueError("Имя автора должно быть строкой.")
+    if not isinstance(post.get("theme", ""), str):
+        raise ValueError("Тема карточки должна быть строкой.")
     author = author.strip()
     blocks = [
         {"type": "photo", "photo": {"type": "photo", "media": "attach://photo"}},
@@ -129,9 +134,18 @@ def send(rich_message, photo, media_type):
             and blocks[1].get("size") == 1
             and type(result.get("message_id")) is int
             and result["message_id"] > 0
+            and type(result.get("date")) is int
+            and result["date"] > 0
         ):
+            try:
+                published = datetime.fromtimestamp(result["date"], timezone.utc)
+            except (ValueError, OSError, OverflowError):
+                raise RuntimeError("Telegram вернул некорректное время публикации.") from None
             print(f"Опубликовано в {CHANNEL}, сообщение {result['message_id']}.")
-            return result["message_id"]
+            return {
+                "message_id": result["message_id"],
+                "published_at": published.isoformat().replace("+00:00", "Z"),
+            }
     raise RuntimeError("Telegram не подтвердил публикацию в ожидаемом канале.")
 
 
@@ -229,11 +243,54 @@ def identity(card, digest):
         "title_key": key_text(card["title"]), "title_digest": text_digest(card["title"]),
         "text_key": key_text(card["text"]), "text_digest": text_digest(card["text"]),
         "photo_sha256": digest, "source_url": card["source_url"],
+        **{key: card[key].strip() for key in ("author", "theme") if card.get(key, "").strip()},
     }
 
 
-def choose_card(cards, state, archive):
+def editorial_labels(card):
+    # Count missing labels together, so unlabeled posts also rotate.
+    return [(field, key_text(card.get(field) or "")) for field in ("author", "theme")]
+
+
+def evening_rank(entries, cards, target_slot):
+    offset = target_slot % 8
+    if offset not in EVENING_OFFSETS:
+        return lambda card: (0,)
+
+    # Older entries may lack the editorial labels. Recover known labels from their source card.
+    catalog = {text_digest(card["text"]): card for card in cards}
+    evening = Counter()
+    same_time = Counter()
+    all_times = Counter()
+    for entry in entries:
+        previous = entry["slot"]
+        if not entry.get("run_id") or entry["status"] != "sent" or previous is None or previous >= target_slot:
+            continue
+        if previous % 8 not in EVENING_OFFSETS:
+            continue
+        original = catalog.get(entry.get("text_digest") or text_digest(entry["text_key"]), {})
+        for key in editorial_labels({**original, **entry}):
+            all_times[key] += 1
+            same_time[key] += previous % 8 == offset
+            evening[key] += previous // 8 == target_slot // 8
+
+    def rank(card):
+        labels = editorial_labels(card)
+        # First spread authors and themes within an evening. Then prefer the slot where each
+        # has appeared least relative to its total across the three evening times.
+        return (
+            sum(evening[k] for k in labels),
+            sum(3 * same_time[k] - all_times[k] for k in labels),
+            sum(same_time[k] for k in labels),
+        )
+
+    return rank
+
+
+def choose_card(cards, state, archive, rank=None):
     keys, used_images = exclusions(state["entries"], archive)
+    if rank is not None:
+        cards = sorted(cards, key=rank)
     for card in cards:
         message = render(card)
         if not fresh(card, keys):
@@ -245,15 +302,15 @@ def choose_card(cards, state, archive):
     return None
 
 
-def record_outcome(store, reservation_id, status, message_id=None):
+def record_outcome(store, reservation_id, status, receipt=None):
     for _ in range(3):
         state, sha = store.read()
         entry = next((e for e in state["entries"] if e.get("reservation_id") == reservation_id), None)
         if entry is None or entry["status"] != "reserved":
             raise RuntimeError("Бронь публикации была изменена. Проверьте журнал.")
         entry["status"] = status
-        if message_id is not None:
-            entry["message_id"] = message_id
+        if receipt is not None:
+            entry.update(receipt)
         try:
             store.write(state, sha, f"Telegram {status}, slot {entry['slot']}")
             return
@@ -277,7 +334,8 @@ def scheduled(cards, archive, store, target_slot, run_id):
         if any(e["slot"] == target_slot or e.get("run_id") == run_id for e in state["entries"]):
             print("Для этого запуска или времени уже существует запись.")
             return
-        choice = choose_card(cards + generated, state, archive)
+        rank = evening_rank(state["entries"], cards, target_slot)
+        choice = choose_card(cards + generated, state, archive, rank)
         if choice is None and not refill_attempted and os.environ.get("OPENAI_API_KEY"):
             from refill import next_card
 
@@ -286,10 +344,10 @@ def scheduled(cards, archive, store, target_slot, run_id):
             for card in cards:
                 keys.update(text_digest(card[k]) for k in ("title", "text"))
             refill_attempted = True
-            card = next_card(lambda candidate: fresh(candidate, keys))
+            card = next_card(lambda candidate: fresh(candidate, keys), rank=rank)
             if card is not None:
                 generated.append(card)
-                choice = choose_card(generated, state, archive)
+                choice = choose_card(generated, state, archive, rank)
         if choice is None:
             print("Очередь новых карточек пуста.")
             return
@@ -315,11 +373,11 @@ def scheduled(cards, archive, store, target_slot, run_id):
         record_outcome(store, reservation_id, "expired")
         return
     try:
-        message_id = send(message, photo, mime)
+        receipt = send(message, photo, mime)
     except (OSError, RuntimeError, ValueError):
         record_outcome(store, reservation_id, "uncertain")
         raise
-    record_outcome(store, reservation_id, "sent", message_id)
+    record_outcome(store, reservation_id, "sent", receipt)
 
 
 def main():
@@ -340,7 +398,8 @@ def main():
         scheduled(cards, archive, RepositoryState(), slot(created), os.environ["GITHUB_RUN_ID"])
     else:
         state = validate_state(json.loads(CATALOG.with_name(STATE).read_text(encoding="utf-8")))
-        choice = choose_card(cards, state, archive)
+        rank = evening_rank(state["entries"], cards, current_slot() + 1)
+        choice = choose_card(cards, state, archive, rank)
         if choice is None:
             print("Очередь новых карточек пуста.")
             return
