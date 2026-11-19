@@ -43,6 +43,21 @@
       "published_at": "2026-11-19T20:19:16Z",
       "photo_width": 1200,
       "photo_height": 1200
+    },
+    {
+      "title_key": "любить свое дело",
+      "title_digest": "e4dedf0cafbe99ccc5b3c470669474c440d43c737d0affa43863ceb1d98772b5",
+      "text_key": "чтобы делать свое дело по настоящему хорошо нужно его любить",
+      "text_digest": "9702107e5913845a88723b0c9c485f32ba7d2febb85c9332d355c0e968f11822",
+      "original_digest": "23dfd38c5640b3ad2dbd3271ddd41c55f7d61391051dd3675063f8f2adab2b36",
+      "photo_sha256": "b265c5395347302852ef058ee18d9575bc8775daa0dd9339440a5e3e697bce79",
+      "source_url": "https://book.stevejobsarchive.com/#sid-1152",
+      "author": "Стив Джобс",
+      "theme": "настойчивость",
+      "reservation_id": "c05d13405718d8f156af5a3ddd565b4f",
+      "run_id": "44634113966",
+      "slot": 166215,
+      "status": "reserved"
     }
   ]
 }
