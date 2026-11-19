@@ -19,6 +19,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from archive import text_digest
+from rich_upload import rich_upload
 
 
 CHANNEL = "@GoTodayGo"
@@ -91,10 +92,22 @@ def bot_token():
     return token
 
 
-def send(rich_message, photo, media_type):
+class UnverifiedMessage(RuntimeError):
+    def __init__(self, receipt, reason):
+        super().__init__(f"Сообщение {receipt['message_id']} в канале. {reason}")
+        self.receipt = receipt
+
+
+def send(rich_message, photo, media_type, *, edit_id=None):
+    from photo_receipt import verify_photo
+
     token = bot_token()
     boundary = secrets.token_hex(24)
-    fields = {"chat_id": CHANNEL, "rich_message": json.dumps(rich_message, ensure_ascii=False)}
+    fields = {"chat_id": CHANNEL, "rich_message": json.dumps(rich_upload(rich_message), ensure_ascii=False)}
+    method = "sendRichMessage"
+    if edit_id is not None:
+        fields["message_id"] = str(edit_id)
+        method = "editMessageText"
     parts = []
     for name, value in fields.items():
         parts.append(
@@ -107,7 +120,7 @@ def send(rich_message, photo, media_type):
         f"\r\n--{boundary}--\r\n".encode(),
     ])
     request = Request(
-        f"https://api.telegram.org/bot{token}/sendRichMessage",
+        f"https://api.telegram.org/bot{token}/{method}",
         data=b"".join(parts),
         headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
     )
@@ -115,6 +128,15 @@ def send(rich_message, photo, media_type):
         with build_opener(NoRedirect()).open(request, timeout=25) as response:
             reply = json.load(response)
     except HTTPError as exc:
+        try:
+            description = json.load(exc).get("description", "")
+        except (ValueError, AttributeError):
+            description = ""
+        if isinstance(description, str):
+            for detail in ("message is not modified", "message can't be edited", "message to edit not found",
+                           "not enough rights", "can't parse", "wrong file identifier"):
+                if detail in description.lower():
+                    raise RuntimeError(f"Telegram {method}: {detail} (HTTP {exc.code}).") from None
         raise RuntimeError(f"Telegram вернул HTTP {exc.code}.") from None
     except (URLError, OSError, HTTPException, ValueError):
         raise RuntimeError("Не удалось подтвердить отправку. Проверьте историю канала.") from None
@@ -127,13 +149,9 @@ def send(rich_message, photo, media_type):
             isinstance(chat, dict)
             and chat.get("type") == "channel"
             and str(chat.get("username", "")).casefold() == CHANNEL[1:].casefold()
-            and isinstance(blocks, list)
-            and all(isinstance(block, dict) for block in blocks)
-            and [block.get("type") for block in blocks] == [block["type"] for block in rich_message["blocks"]]
-            and blocks[0].get("photo")
-            and blocks[1].get("size") == 1
             and type(result.get("message_id")) is int
             and result["message_id"] > 0
+            and (edit_id is None or result["message_id"] == edit_id)
             and type(result.get("date")) is int
             and result["date"] > 0
         ):
@@ -141,11 +159,21 @@ def send(rich_message, photo, media_type):
                 published = datetime.fromtimestamp(result["date"], timezone.utc)
             except (ValueError, OSError, OverflowError):
                 raise RuntimeError("Telegram вернул некорректное время публикации.") from None
-            print(f"Опубликовано в {CHANNEL}, сообщение {result['message_id']}.")
-            return {
+            receipt = {
                 "message_id": result["message_id"],
                 "published_at": published.isoformat().replace("+00:00", "Z"),
             }
+            if (not isinstance(blocks, list) or not all(isinstance(b, dict) for b in blocks)
+                    or [b.get("type") for b in blocks] != [b["type"] for b in rich_message["blocks"]]
+                    or blocks[1].get("size") != 1):
+                raise UnverifiedMessage(receipt, "Telegram не подтвердил формат карточки.")
+            try:
+                width, height = verify_photo(blocks, photo, token)
+            except RuntimeError as error:
+                raise UnverifiedMessage(receipt, str(error)) from None
+            receipt.update(photo_width=width, photo_height=height)
+            print(f"Фото из Telegram сверено с оригиналом: {width}×{height}. Сообщение {result['message_id']}.")
+            return receipt
     raise RuntimeError("Telegram не подтвердил публикацию в ожидаемом канале.")
 
 
@@ -374,20 +402,62 @@ def scheduled(cards, archive, store, target_slot, run_id):
         return
     try:
         receipt = send(message, photo, mime)
+    except UnverifiedMessage as error:
+        record_outcome(store, reservation_id, "uncertain", error.receipt)
+        raise
     except (OSError, RuntimeError, ValueError):
         record_outcome(store, reservation_id, "uncertain")
         raise
     record_outcome(store, reservation_id, "sent", receipt)
 
 
+def repair_photo(cards, store, message_id):
+    state, _ = store.read()
+    matches = [e for e in state["entries"] if e.get("message_id") == message_id
+               and e["status"] in {"sent", "uncertain"}]
+    if len(matches) != 1:
+        raise ValueError("Для этого сообщения в журнале нужна одна подтверждённая запись с его номером.")
+    entry = matches[0]
+    for card in cards:
+        if (key_text(card["title"]), key_text(card["text"])) != (entry["title_key"], entry["text_key"]):
+            continue
+        photo, mime = photo_file(card)
+        if hashlib.sha256(photo.read_bytes()).hexdigest() != entry["photo_sha256"]:
+            continue
+        receipt = send(render(card), photo, mime, edit_id=message_id)
+        break
+    else:
+        raise ValueError("Исходная карточка с этим текстом и изображением не найдена.")
+    for _ in range(3):
+        state, sha = store.read()
+        current = next((e for e in state["entries"] if e.get("message_id") == message_id), None)
+        if (current is None or current["photo_sha256"] != entry["photo_sha256"]
+                or current["status"] not in {"sent", "uncertain"}):
+            raise RuntimeError("Запись в журнале изменилась во время редактирования.")
+        current.update(status="sent", photo_width=receipt["photo_width"], photo_height=receipt["photo_height"])
+        try:
+            store.write(state, sha, f"Verify Telegram photo in message {message_id}")
+            return
+        except StateConflict:
+            continue
+    raise RuntimeError("Telegram подтвердил фотографию, но запись проверки в журнал не удалась.")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--send", action="store_true", help="send the scheduled post")
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument("--send", action="store_true", help="send the scheduled post")
+    action.add_argument("--repair-photo", type=int, metavar="MESSAGE_ID", help="restore a published card in place")
     parser.add_argument("--created-at", help="UTC creation time of the scheduled workflow run")
     args = parser.parse_args()
     cards = json.loads(CATALOG.read_text(encoding="utf-8"))
     if not isinstance(cards, list):
         raise ValueError("Ожидается очередь карточек в cards.json.")
+    if args.repair_photo is not None:
+        if args.repair_photo <= 0:
+            parser.error("--repair-photo requires a positive message ID")
+        repair_photo(cards, RepositoryState(), args.repair_photo)
+        return
     archive = archive_keys()
     if args.send:
         if not args.created_at or not os.environ.get("GITHUB_RUN_ID"):

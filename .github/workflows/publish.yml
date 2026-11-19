@@ -10,13 +10,17 @@ on:
         description: 'Опубликовать пост, если текущее трёхчасовое окно свободно'
         type: boolean
         default: false
+      repair_photo:
+        description: 'Исправить фото в существующем посте по номеру сообщения'
+        type: string
+        required: false
 
 permissions:
   contents: read
 
 jobs:
   preview:
-    if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot
+    if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot && inputs.repair_photo == ''
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -39,7 +43,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' && github.run_attempt == 1 &&
       (github.event_name == 'schedule' ||
-      (github.event_name == 'workflow_dispatch' && inputs.recover_current_slot))
+      (github.event_name == 'workflow_dispatch' && (inputs.recover_current_slot || inputs.repair_photo != '')))
     runs-on: ubuntu-latest
     timeout-minutes: 12
     permissions:
@@ -52,11 +56,20 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - name: Публикация по расписанию
+      - name: Подготовить проверку изображений
+        run: |
+          python3 -m venv "$RUNNER_TEMP/telegram-photo"
+          "$RUNNER_TEMP/telegram-photo/bin/pip" install --disable-pip-version-check --only-binary=:all: Pillow==13.0.0
+      - name: Отправить или исправить карточку
         env:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          REPAIR_PHOTO: ${{ inputs.repair_photo }}
         run: |
-          created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')
-          python3 publish.py --send --created-at "$created_at"
+          if [[ -n "$REPAIR_PHOTO" ]]; then
+            "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --repair-photo "$REPAIR_PHOTO"
+          else
+            created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')
+            "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --send --created-at "$created_at"
+          fi
