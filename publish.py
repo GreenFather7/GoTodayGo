@@ -58,7 +58,11 @@ def render(post):
         {"type": "paragraph", "text": post["text"].strip()},
     ]
     if author:
-        author_link = {"type": "url", "text": author, "url": post["source_url"].strip()}
+        work = post.get("work", "")
+        if not isinstance(work, str):
+            raise ValueError("Название источника должно быть строкой.")
+        credit = f"{author}, {work.strip()}" if work.strip() else author
+        author_link = {"type": "url", "text": credit, "url": post["source_url"].strip()}
         blocks.append({"type": "paragraph", "text": ["©️ ", author_link]})
     channel_link = {"type": "url", "text": "Сегодня тот самый день", "url": "https://t.me/GoTodayGo"}
     blocks.append({"type": "footer", "text": ["🌏 ", channel_link]})
