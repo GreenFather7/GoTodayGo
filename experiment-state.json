@@ -1,6 +1,11 @@
 {
   "version": 1,
   "completed": false,
-  "start": null,
-  "samples": {}
+  "start": "2026-11-19T16:51:39Z",
+  "samples": {
+    "3508": {
+      "slot": 166213,
+      "published_at": "2026-11-19T16:51:39Z"
+    }
+  }
 }
