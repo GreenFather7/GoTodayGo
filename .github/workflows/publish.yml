@@ -3,14 +3,20 @@ name: GoTodayGo
 on:
   schedule:
     - cron: '18 1,4,7,10,13,16,19,22 * * *'
+    - cron: '38 1,4,7,10,13,16,19,22 * * *'
   workflow_dispatch:
+    inputs:
+      recover_current_slot:
+        description: 'Опубликовать пост, если текущее трёхчасовое окно свободно'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
   preview:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -20,15 +26,20 @@ jobs:
       - name: Подключение сервисов
         env:
           TELEGRAM_CONFIGURED: ${{ secrets.TELEGRAM_BOT_TOKEN != '' }}
+          TELEGRAM_VARIABLE_CONFIGURED: ${{ vars.TELEGRAM_BOT_TOKEN != '' }}
           OPENAI_CONFIGURED: ${{ secrets.OPENAI_API_KEY != '' }}
         run: |
           echo "Telegram token configured: $TELEGRAM_CONFIGURED"
+          echo "Same-named Actions variable present: $TELEGRAM_VARIABLE_CONFIGURED"
           echo "Image generation key configured: $OPENAI_CONFIGURED"
       - name: Предпросмотр очереди
         run: python3 publish.py
 
   publish:
-    if: github.event_name == 'schedule' && github.run_attempt == 1
+    if: >-
+      github.ref == 'refs/heads/main' && github.run_attempt == 1 &&
+      (github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' && inputs.recover_current_slot))
     runs-on: ubuntu-latest
     timeout-minutes: 12
     permissions:
