@@ -102,5 +102,105 @@
     "source_url": "https://classics.mit.edu/Aristotle/nicomachaen.2.ii.html#31",
     "theme": "настойчивость",
     "photo": "media/microscope.jpg"
+  },
+  {
+    "title": "Цена ошибки",
+    "text": "Я учусь на ошибках и ценю этот опыт.",
+    "author": "Серена Уильямс",
+    "original": "Mistakes are learning experiences, and I embrace those moments.",
+    "source_url": "https://www.vogue.com/article/serena-williams-retirement-in-her-own-words",
+    "theme": "преодоление неудач",
+    "scene": "Один теннисный мяч за линией, рядом на грунте след от точного попадания в корт.",
+    "photo": "media/tennis-line-mark.jpg"
+  },
+  {
+    "title": "Слово себе",
+    "text": "Решись сделать то, что должен. И сделай то, на что решился.",
+    "author": "Бенджамин Франклин",
+    "original": "Resolve to perform what you ought; perform without fail what you resolve.",
+    "source_url": "https://github.com/GITenberg/Autobiography-of-Benjamin-Franklin_20203/blob/00a2969472932508627c801ab7998f8d975357db/20203.txt#L3509",
+    "theme": "настойчивость",
+    "scene": "Починенный подвесной мостик на лесной тропе, новая крепкая доска в ряду старых, рядом молоток.",
+    "photo": "media/mended-footbridge.jpg"
+  },
+  {
+    "title": "Внутренний источник",
+    "text": "Загляни в себя. Там источник добра, и он будет бить, пока ты копаешь.",
+    "author": "Марк Аврелий",
+    "original": "Look within. Within is the fountain of good, and it will ever bubble up, if thou wilt ever dig.",
+    "source_url": "https://classics.mit.edu/Antoninus/meditations.7.seven.html#290",
+    "theme": "уверенность в своих силах",
+    "scene": "Ключ пробивается из-под камня в чистой лесной заводи; расходятся кольца.",
+    "photo": "media/woodland-spring.jpg"
+  },
+  {
+    "title": "От плана к делу",
+    "text": "Составьте план и выполните его.",
+    "author": "Джефф Безос",
+    "original": "Put in place a plan and execute.",
+    "source_url": "https://www.aboutamazon.com/news/company-news/2018-letter-to-shareholders#:~:text=Put%20in%20place%20a%20plan%20and%20execute.",
+    "theme": "первый шаг",
+    "scene": "На столе разложены и вырезанные детали, и собранная из них деревянная модель лодки.",
+    "photo": "media/boat-build.jpg"
+  },
+  {
+    "title": "Твоя игра",
+    "text": "Играй с полной отдачей, на своих условиях, и оставайся собой.",
+    "author": "Пит Сампрас",
+    "original": "Play hard, do it on your own terms and stay true to yourself.",
+    "source_url": "https://www.theplayerstribune.com/articles/pete-sampras-letter-to-my-younger-self",
+    "theme": "уверенность в своих силах",
+    "scene": "Скромная тренировочная сумка и единственная потёртая ракетка у открытой калитки пустого корта.",
+    "photo": "media/own-court.jpg"
+  },
+  {
+    "title": "Ради чего строить",
+    "text": "Думаю, важно, чтобы будущее вдохновляло и притягивало.",
+    "author": "Илон Маск",
+    "original": "I think it's important to have a future that is inspiring and appealing.",
+    "source_url": "https://www.ted.com/talks/elon_musk_the_future_we_re_building_and_boring/transcript?language=en",
+    "theme": "первый шаг",
+    "scene": "Небольшой прототип солнечной панели в мастерской на фоне открытого окна.",
+    "photo": "media/solar-prototype.jpg"
+  },
+  {
+    "title": "Ещё одна подача",
+    "text": "Никогда не ставьте на себе крест.",
+    "author": "Билли Джин Кинг",
+    "original": "So don't ever give up on yourself.",
+    "source_url": "https://www.ted.com/talks/billie_jean_king_this_tennis_icon_paved_the_way_for_women_in_sports/transcript?language=en",
+    "theme": "преодоление неудач",
+    "scene": "Крупно тугая вновь натянутая сетка ракетки на станке, тонкий рулон свежей струны рядом.",
+    "photo": "media/restrung-racquet.jpg"
+  },
+  {
+    "title": "У каждого дела своё время",
+    "text": "Каждой вещи отведи своё место, каждому делу — своё время.",
+    "author": "Бенджамин Франклин",
+    "original": "Let all your things have their places; let each part of your business have its time.",
+    "source_url": "https://github.com/GITenberg/Autobiography-of-Benjamin-Franklin_20203/blob/00a2969472932508627c801ab7998f8d975357db/20203.txt#L3504",
+    "theme": "настойчивость",
+    "scene": "Часовщик расположил инструменты по местам на чистом верстаке, часы разобраны.",
+    "photo": "media/watchmaker-bench.jpg"
+  },
+  {
+    "title": "Пока это лишь идея",
+    "text": "Идею может придумать почти каждый. Важно превратить её в работающий продукт.",
+    "author": "Генри Форд",
+    "original": "Almost any one can think up an idea. The thing that counts is developing it into a practical product.",
+    "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt#L168",
+    "theme": "первый шаг",
+    "scene": "В мастерской на полке череда прототипов одного простого предмета, последний собран и готов к работе.",
+    "photo": "media/working-prototype.jpg"
+  },
+  {
+    "title": "Бежать вместе",
+    "text": "Спорт может вдохновлять, дарить радость и объединять людей.",
+    "author": "Элиуд Кипчоге",
+    "original": "Sport can inspire, bring positivity and unify people",
+    "source_url": "https://www.ineos159challenge.com/news/free-digital-education-resources-launched",
+    "theme": "уверенность в своих силах",
+    "scene": "На тренировочном марафоне ранним утром стол с многоразовыми стаканами воды тянется вдоль шоссе.",
+    "photo": "media/race-water-station.jpg"
   }
 ]
