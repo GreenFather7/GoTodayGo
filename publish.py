@@ -62,6 +62,8 @@ def render(post):
         if not isinstance(work, str):
             raise ValueError("Название источника должно быть строкой.")
         credit = f"{author}, {work.strip()}" if work.strip() else author
+        if post.get("original"):
+            credit += " · перевод"
         author_link = {"type": "url", "text": credit, "url": post["source_url"].strip()}
         blocks.append({"type": "paragraph", "text": ["©️ ", author_link]})
     channel_link = {"type": "url", "text": "Сегодня тот самый день", "url": "https://t.me/GoTodayGo"}
@@ -273,12 +275,21 @@ def exclusions(entries, archive):
     for entry in entries:
         keys.add(entry.get("title_digest") or text_digest(entry["title_key"]))
         keys.add(entry.get("text_digest") or text_digest(entry["text_key"]))
+        if entry.get("original_digest"):
+            keys.add(entry["original_digest"])
         images.add(entry["photo_sha256"])
     return keys, images
 
 
+def card_keys(card):
+    texts = [card["title"], card["text"]]
+    if card.get("original"):
+        texts.append(card["original"])
+    return {text_digest(text) for text in texts}
+
+
 def fresh(card, keys):
-    return all(text_digest(card[k]) not in keys for k in ("title", "text"))
+    return keys.isdisjoint(card_keys(card))
 
 
 def key_text(value):
@@ -290,6 +301,7 @@ def identity(card, digest):
     return {
         "title_key": key_text(card["title"]), "title_digest": text_digest(card["title"]),
         "text_key": key_text(card["text"]), "text_digest": text_digest(card["text"]),
+        **({"original_digest": text_digest(card["original"])} if card.get("original") else {}),
         "photo_sha256": digest, "source_url": card["source_url"],
         **{key: card[key].strip() for key in ("author", "theme") if card.get(key, "").strip()},
     }
@@ -390,7 +402,7 @@ def scheduled(cards, archive, store, target_slot, run_id):
             bot_token()
             keys, _ = exclusions(state["entries"], archive)
             for card in cards:
-                keys.update(text_digest(card[k]) for k in ("title", "text"))
+                keys.update(card_keys(card))
             refill_attempted = True
             card = next_card(lambda candidate: fresh(candidate, keys), rank=rank)
             if card is not None:
