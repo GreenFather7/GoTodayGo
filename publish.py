@@ -3,6 +3,7 @@
 import argparse
 import base64
 import hashlib
+import io
 import json
 import os
 import re
@@ -105,9 +106,24 @@ def send(rich_message, photo, media_type, *, edit_id=None):
     boundary = secrets.token_hex(24)
     fields = {"chat_id": CHANNEL, "rich_message": json.dumps(rich_upload(rich_message), ensure_ascii=False)}
     method = "sendRichMessage"
+    filename = f"card{photo.suffix.lower()}"
     if edit_id is not None:
+        from PIL import Image, ImageOps
+
         fields["message_id"] = str(edit_id)
         method = "editMessageText"
+        # Telegram treats a byte-identical upload as a no-op when editing the same post.
+        with Image.open(photo) as source:
+            upload = ImageOps.exif_transpose(source).convert("RGB")
+            longest = max(upload.size)
+            target = min(1200, longest - 1) if longest > 1 else 1
+            upload.thumbnail((target, target), Image.Resampling.LANCZOS)
+            encoded = io.BytesIO()
+            upload.save(encoded, "JPEG", quality=94, optimize=True)
+            binary = encoded.getvalue()
+        media_type, filename = "image/jpeg", "illustration.jpg"
+    else:
+        binary = photo.read_bytes()
     parts = []
     for name, value in fields.items():
         parts.append(
@@ -115,8 +131,8 @@ def send(rich_message, photo, media_type, *, edit_id=None):
         )
     parts.extend([
         f'--{boundary}\r\nContent-Disposition: form-data; name="photo"; '
-        f'filename="card{photo.suffix.lower()}"\r\nContent-Type: {media_type}\r\n\r\n'.encode(),
-        photo.read_bytes(),
+        f'filename="{filename}"\r\nContent-Type: {media_type}\r\n\r\n'.encode(),
+        binary,
         f"\r\n--{boundary}--\r\n".encode(),
     ])
     request = Request(
