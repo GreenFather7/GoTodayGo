@@ -40,7 +40,9 @@
       "slot": 166214,
       "status": "sent",
       "message_id": 3509,
-      "published_at": "2026-11-19T20:19:16Z"
+      "published_at": "2026-11-19T20:19:16Z",
+      "photo_width": 1200,
+      "photo_height": 1200
     }
   ]
 }
