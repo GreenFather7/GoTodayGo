@@ -1,0 +1,61 @@
+[
+  {
+    "group": "business",
+    "author": "Генри Форд",
+    "work": "My Life and Work",
+    "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt",
+    "originals": [
+      "One who fears the future, who fears failure, limits his activities.",
+      "There is no disgrace in honest failure; there is disgrace in fearing to fail.",
+      "What is past is useful only as it suggests ways and means for progress.",
+      "There is an immense amount to be learned simply by tinkering with things.",
+      "We learn more from our failures than from our successes."
+    ]
+  },
+  {
+    "group": "business",
+    "author": "Бенджамин Франклин",
+    "work": "Автобиография",
+    "source_url": "https://github.com/GITenberg/The-Autobiography-of-Benjamin-Franklin_148/blob/6a006405564a4927409f7a04ccae741e51e9ef70/148.txt#L2940-L2975",
+    "originals": [
+      "Lose no time; be always employ'd in something useful; cut off all unnecessary actions.",
+      "Be not disturbed at trifles, or at accidents common or unavoidable."
+    ]
+  },
+  {
+    "group": "business",
+    "author": "Стив Джобс",
+    "work": "Речь в Стэнфорде",
+    "source_url": "https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-says",
+    "originals": [
+      "Don’t let the noise of others’ opinions drown out your own inner voice."
+    ]
+  },
+  {
+    "group": "sport",
+    "author": "Роджер Федерер",
+    "work": "Речь в Дартмутском колледже",
+    "source_url": "https://home.dartmouth.edu/news/2024/06/2024-commencement-address-roger-federer",
+    "originals": [
+      "I beat some top players I really admired—by aiming right at their strengths."
+    ]
+  },
+  {
+    "group": "sport",
+    "author": "Марта Виейра да Силва",
+    "work": "Письмо себе в детство",
+    "source_url": "https://www.theplayerstribune.com/articles/marta-brazil-letter-to-my-younger-self",
+    "originals": [
+      "Fight against the lack of support."
+    ]
+  },
+  {
+    "group": "sport",
+    "author": "Пит Сампрас",
+    "work": "Письмо себе в юность",
+    "source_url": "https://www.theplayerstribune.com/articles/pete-sampras-letter-to-my-younger-self",
+    "originals": [
+      "Take time to appreciate your major wins and share them with your family and friends."
+    ]
+  }
+]

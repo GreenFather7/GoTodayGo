@@ -20,6 +20,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from archive import text_digest
+from refill import short_quote
 from rich_upload import rich_upload
 
 
@@ -353,7 +354,7 @@ def choose_card(cards, state, archive, rank=None):
         cards = sorted(cards, key=rank)
     for card in cards:
         message = render(card)
-        if not fresh(card, keys):
+        if not fresh(card, keys) or not short_quote(card["text"]):
             continue
         photo, mime = photo_file(card)
         digest = hashlib.sha256(photo.read_bytes()).hexdigest()
