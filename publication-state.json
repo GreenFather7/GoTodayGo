@@ -57,7 +57,11 @@
       "reservation_id": "c05d13405718d8f156af5a3ddd565b4f",
       "run_id": "44634113966",
       "slot": 166215,
-      "status": "reserved"
+      "status": "sent",
+      "message_id": 3510,
+      "published_at": "2026-11-19T23:02:49Z",
+      "photo_width": 1254,
+      "photo_height": 1254
     }
   ]
 }
