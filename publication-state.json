@@ -22,7 +22,9 @@
       "reservation_id": "1e38555f1c763951cbabb2949da49216",
       "run_id": "recovery-2026-11-19-1918-MSK",
       "slot": 166213,
-      "status": "reserved"
+      "status": "sent",
+      "message_id": 3508,
+      "published_at": "2026-11-19T16:51:39Z"
     }
   ]
 }
