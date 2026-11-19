@@ -9,6 +9,20 @@
       "text_key": "думай о том что может сделать тебя счастливым делай то что тебе нравится будь с людьми с которыми тебе хорошо",
       "photo_sha256": "adeb60f9dff208809c2d18be8951fd4a084f17fed7e01d09ee230a42cc1ea176",
       "source_url": "https://t.me/GoTodayGo/3177"
+    },
+    {
+      "title_key": "чудо своими руками",
+      "title_digest": "b55d1a903ed20e0bd4499a4b1572fdae9bba063b4f52aaaba45d8101423e7468",
+      "text_key": "но есть не меньшие чудеса улыбка веселье прощение и вовремя сказанное нужное слово владеть этим значит владеть всем",
+      "text_digest": "15f24cf074d9f0cfbb16d5bf221c66fa2595a5a804877bc3f098dec967b2efc5",
+      "photo_sha256": "f27f657d33677c3275fe7cd250db04265098be510a55c71c15d5074f8a44079b",
+      "source_url": "https://ilibrary.ru/text/1845/p.7/index.html",
+      "author": "Александр Грин",
+      "theme": "доброта и близость",
+      "reservation_id": "1e38555f1c763951cbabb2949da49216",
+      "run_id": "recovery-2026-11-19-1918-MSK",
+      "slot": 166213,
+      "status": "reserved"
     }
   ]
 }
