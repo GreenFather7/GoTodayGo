@@ -62,6 +62,21 @@
       "published_at": "2026-11-19T23:02:49Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "за легкостью",
+      "title_digest": "19bcec1328ce5a3b5b6df2b3f7ec495b189c651e3ef088c1bc81d502440e5ffb",
+      "text_key": "мне пришлось много работать чтобы все выглядело легко",
+      "text_digest": "e64284f5d8e44e2003f8b1d14e57b62840122aa3f4b60e8c75ed03567d5261f9",
+      "original_digest": "73be19d128a0af949966efdd76611557f4e6d39757e8fc1400b85f132f3dba68",
+      "photo_sha256": "ec4bb0153a04f32b17fcd31f9156d523c613c2900c5af4af782307d154d50a2e",
+      "source_url": "https://home.dartmouth.edu/news/2024/06/2024-commencement-address-roger-federer",
+      "author": "Роджер Федерер",
+      "theme": "настойчивость",
+      "reservation_id": "52a70d0a9576599d3ce8e6fa84886306",
+      "run_id": "44669467794",
+      "slot": 166216,
+      "status": "reserved"
     }
   ]
 }
