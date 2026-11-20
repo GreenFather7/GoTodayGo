@@ -2,8 +2,11 @@ name: GoTodayGo
 
 on:
   schedule:
-    - cron: '18 1,4,7,10,13,16,19,22 * * *'
-    - cron: '38 1,4,7,10,13,16,19,22 * * *'
+    - cron: '3,18,33,48 * * * *'
+  workflow_run:
+    workflows: ['GoTodayGo · просмотры за сутки']
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       recover_current_slot:
@@ -15,12 +18,13 @@ on:
         type: string
         required: false
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   preview:
     if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot && inputs.repair_photo == ''
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -43,6 +47,11 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' && github.run_attempt == 1 &&
       (github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.event == 'schedule' &&
+      github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.run_attempt == 1 &&
+      github.event.workflow_run.path == '.github/workflows/measure.yml' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      github.event.workflow_run.head_branch == 'main') ||
       (github.event_name == 'workflow_dispatch' && (inputs.recover_current_slot || inputs.repair_photo != '')))
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -56,20 +65,41 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
+      - name: Проверить окно по журналу
+        id: window
+        if: ${{ !inputs.repair_photo }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')
+          echo "created_at=$created_at" >> "$GITHUB_OUTPUT"
+          python3 - "$created_at" >> "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import sys
+          from datetime import datetime
+          from publish import CATALOG, STATE, current_slot, slot, validate_state
+
+          target = slot(datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00")))
+          state = validate_state(json.loads(CATALOG.with_name(STATE).read_text(encoding="utf-8")))
+          occupied = any(entry["slot"] == target for entry in state["entries"])
+          print("open=" + str(target == current_slot() and not occupied).lower())
+          PY
       - name: Подготовить проверку изображений
+        if: inputs.repair_photo || steps.window.outputs.open == 'true'
         run: |
           python3 -m venv "$RUNNER_TEMP/telegram-photo"
           "$RUNNER_TEMP/telegram-photo/bin/pip" install --disable-pip-version-check --only-binary=:all: Pillow==13.0.0
       - name: Отправить или исправить карточку
+        if: inputs.repair_photo || steps.window.outputs.open == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           REPAIR_PHOTO: ${{ inputs.repair_photo }}
+          CREATED_AT: ${{ steps.window.outputs.created_at }}
         run: |
           if [[ -n "$REPAIR_PHOTO" ]]; then
             "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --repair-photo "$REPAIR_PHOTO"
           else
-            created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq '.created_at')
-            "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --send --created-at "$created_at"
+            "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --send --created-at "$CREATED_AT"
           fi
