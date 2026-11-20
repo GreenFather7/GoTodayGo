@@ -100,6 +100,21 @@
       "published_at": "2026-11-20T08:00:20Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "вторая попытка",
+      "title_digest": "efa1329461631079dc3ffda34dead445764e7fa8755b7681b83a72d30c8ace63",
+      "text_key": "неудача лишь возможность начать заново на этот раз разумнее",
+      "text_digest": "bace5aef16582d21c7a4832094dd4b318ae9defbd1c906bbad83623e9d412572",
+      "original_digest": "4daf800305495841e59f0e7121ed8a8977d09536342cd9b893d1a3fc26692809",
+      "photo_sha256": "460d4f398841773007c75ba9b65a9dbb29635f0f237dc642860ebbfb5b2b1d63",
+      "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt#L667",
+      "author": "Генри Форд",
+      "theme": "преодоление неудач",
+      "reservation_id": "c1d52dca6b0993ceee9557746d0f6f95",
+      "run_id": "44738330081",
+      "slot": 166219,
+      "status": "reserved"
     }
   ]
 }
