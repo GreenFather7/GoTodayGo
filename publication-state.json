@@ -152,7 +152,7 @@
       "reservation_id": "8711d727a428490adb3623357398876d",
       "run_id": "44816444079",
       "slot": 166222,
-      "status": "reserved"
+      "status": "uncertain"
     }
   ]
 }
