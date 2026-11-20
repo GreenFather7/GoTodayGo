@@ -138,6 +138,21 @@
       "published_at": "2026-11-20T16:57:10Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "будущее начинается здесь",
+      "title_digest": "91c8177282191f46c6029f45d5886fc3a60733aafaa623881da311e80ae6e687",
+      "text_key": "думаю если хочешь хорошего будущего нужно самому его создавать",
+      "text_digest": "f3ba4a01198d999c9a8d8c595a2f1557aa7da6752cf6706287ea2929c4a785b7",
+      "original_digest": "90721cdd4c3e09efcacdf27a38a0f661521b6010d83372a383245fdc80787a30",
+      "photo_sha256": "a3bceff5f350f5755dce9cb89055a307ca7b77915eca27d32057001ea43e7034",
+      "source_url": "https://www.ted.com/talks/elon_musk_a_future_worth_getting_excited_about/transcript?language=en",
+      "author": "Илон Маск",
+      "theme": "первый шаг",
+      "reservation_id": "8711d727a428490adb3623357398876d",
+      "run_id": "44816444079",
+      "slot": 166222,
+      "status": "reserved"
     }
   ]
 }
