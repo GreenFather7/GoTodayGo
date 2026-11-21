@@ -172,6 +172,21 @@
       "published_at": "2026-11-20T22:56:54Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "сила команды",
+      "title_digest": "9fc6d376a3e45db6368fb53ac30b3a5e2df0503b5c82eda028a33cc9c732954d",
+      "text_key": "мои сто процентов ничто по сравнению с одним процентом сил всей команды",
+      "text_digest": "ef809aee8cb7dc4f729e4b171680a4f2bc7f1fc9dd8bfff1c1cb0a722022d4da",
+      "original_digest": "f8f742070a183fc9f14c019b9a6059c42a7de2ec9b35c29ef4602496c730ced3",
+      "photo_sha256": "ad586b2342cbc8ca8e09a6b0f86d4a62722ae8ddaff387e34d9e8b0fb11cb928",
+      "source_url": "https://www.ineos159challenge.com/history-made",
+      "author": "Элиуд Кипчоге",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "5557e500761bced36120e0c14c6d13f3",
+      "run_id": "44854102607",
+      "slot": 166224,
+      "status": "reserved"
     }
   ]
 }
