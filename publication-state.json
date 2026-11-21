@@ -191,6 +191,21 @@
       "published_at": "2026-11-21T02:07:34Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "знание приходит с практикой",
+      "title_digest": "153bb908838d7ca73744ff7962dca93819fd21c4d2df2faac52d671f3a9b06d5",
+      "text_key": "тому что нужно уметь делать мы учимся на практике",
+      "text_digest": "8413ff300c7a27f94c25f8b48d264682f11142714a5a7d8a461390e0ed87d14b",
+      "original_digest": "7058bd7ca103d5efb84a4a875dd23bd0f6fc56686464d59fc329f6ddc9825d31",
+      "photo_sha256": "ee50888069d72a959c8740ca3a5d81d0397e4133f766a3a78c4f92830357df2e",
+      "source_url": "https://classics.mit.edu/Aristotle/nicomachaen.2.ii.html#31",
+      "author": "Аристотель",
+      "theme": "настойчивость",
+      "reservation_id": "2b25936a2c6e8fb5a6a5834dd3fe372f",
+      "run_id": "44890704477",
+      "slot": 166226,
+      "status": "reserved"
     }
   ]
 }
