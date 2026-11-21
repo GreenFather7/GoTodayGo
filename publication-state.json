@@ -248,6 +248,21 @@
       "published_at": "2026-11-21T17:23:31Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "внутренний источник",
+      "title_digest": "81178e53d5eacefe7059fd33aa2259e42c5a17fc6a0f82dd0001fa65a88bc679",
+      "text_key": "загляни в себя там источник добра и он будет бить пока ты копаешь",
+      "text_digest": "ba325433754d58e81100008d294b8a20288e1755552404bc297d475809588fd4",
+      "original_digest": "9d3ec67b7f00dfb3b00533eb57b2517d79698675835c8d33309b3f295d491879",
+      "photo_sha256": "b00b4d80aaea1c1b43e14442c351f01e4f949bd58003a8451a37aff210a588ac",
+      "source_url": "https://classics.mit.edu/Antoninus/meditations.7.seven.html#290",
+      "author": "Марк Аврелий",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "5a9744d1ea0a562e5af28ad407950d42",
+      "run_id": "44956165880",
+      "slot": 166231,
+      "status": "reserved"
     }
   ]
 }
