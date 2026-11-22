@@ -286,6 +286,21 @@
       "published_at": "2026-11-22T02:37:29Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "твоя игра",
+      "title_digest": "35ab9845f798ecaf14160e9dbc0ae026d67fc7957953fb1c499710165a961cc2",
+      "text_key": "играй с полной отдачей на своих условиях и оставайся собой",
+      "text_digest": "9e3f00f0a2e5c6bc12ebf34d159bf70336d183c65f13c47c0374dbbe20d204d2",
+      "original_digest": "97595ae3152dedfe23ec5d5004c87275ee12502d74b133956bf416f3c455e76e",
+      "photo_sha256": "6ace23302d2d4e801643005e58003e7f62bf589a9722c38fcb85c449497eca95",
+      "source_url": "https://www.theplayerstribune.com/articles/pete-sampras-letter-to-my-younger-self",
+      "author": "Пит Сампрас",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "0e30fc9c31873b8f847f023a32f41b52",
+      "run_id": "45011524416",
+      "slot": 166234,
+      "status": "reserved"
     }
   ]
 }
