@@ -324,6 +324,21 @@
       "published_at": "2026-11-22T11:49:59Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "еще одна подача",
+      "title_digest": "c5465cc8012f7c512fe67b0d0324040f287679e1c355b22f2173353b4266df05",
+      "text_key": "никогда не ставьте на себе крест",
+      "text_digest": "2c183d82bba0c2d5048447f60d3b7bbb20fa91aa62aee9e169200eece0836e02",
+      "original_digest": "fdbe18014f647546950a7fc0afcf10a53be4b7260b95a91ed05922d07f8721b4",
+      "photo_sha256": "07b02168fefd3608a5313ac02b65574a0fa3d87560adf58c8dacefaf098abfbe",
+      "source_url": "https://www.ted.com/talks/billie_jean_king_this_tennis_icon_paved_the_way_for_women_in_sports/transcript?language=en",
+      "author": "Билли Джин Кинг",
+      "theme": "преодоление неудач",
+      "reservation_id": "ab8cedf1098fe71e81c86a8b52d2834d",
+      "run_id": "45052655768",
+      "slot": 166237,
+      "status": "reserved"
     }
   ]
 }
