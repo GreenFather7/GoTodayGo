@@ -343,6 +343,21 @@
       "published_at": "2026-11-22T18:01:23Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "у каждого дела свое время",
+      "title_digest": "68d02fef1219c72d851de7ed2f1effac3ecff772bc08e657e6a7d08573d564b7",
+      "text_key": "каждой вещи отведи свое место каждому делу свое время",
+      "text_digest": "047f4e4a3f02bb20e1db65a323fedcb564f85b918e1b047960552e99ce69f58f",
+      "original_digest": "8b7617d3221ea31d5482aba3cd88c12fc822c86a801ad3265fb6eaff60eaadf3",
+      "photo_sha256": "e6f18d1fb449094a5ab523c4ed56d29b112b51c68ad5bcb7dc81a59ada8893f5",
+      "source_url": "https://github.com/GITenberg/Autobiography-of-Benjamin-Franklin_20203/blob/00a2969472932508627c801ab7998f8d975357db/20203.txt#L3504",
+      "author": "Бенджамин Франклин",
+      "theme": "настойчивость",
+      "reservation_id": "88d1e6d493a1482bfd314feae718921f",
+      "run_id": "45083894197",
+      "slot": 166239,
+      "status": "reserved"
     }
   ]
 }
