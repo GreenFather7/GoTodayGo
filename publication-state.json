@@ -305,6 +305,21 @@
       "published_at": "2026-11-22T10:15:31Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "ради чего строить",
+      "title_digest": "06ff07195a54bc4f49d398bcc4c5f8cb07fbb7f2598fabb3c703a5532ffeb20f",
+      "text_key": "думаю важно чтобы будущее вдохновляло и притягивало",
+      "text_digest": "1df6c99bc5b6578e5ae80127b37d594b86517df8555060dd3cf356a6ba213910",
+      "original_digest": "3438f461770ba90c25ded80409a9e47b824c6a982c63fe2e6cd86050acb4162c",
+      "photo_sha256": "440919017af8b77aaaacc4091d1ed6ada0a858586eac05c44985ac919d4f3591",
+      "source_url": "https://www.ted.com/talks/elon_musk_the_future_we_re_building_and_boring/transcript?language=en",
+      "author": "Илон Маск",
+      "theme": "первый шаг",
+      "reservation_id": "259ec9bd351d48b7769346655ce6a59f",
+      "run_id": "45019217465",
+      "slot": 166235,
+      "status": "reserved"
     }
   ]
 }
