@@ -267,6 +267,21 @@
       "published_at": "2026-11-21T22:19:55Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "от плана к делу",
+      "title_digest": "beed676e7ab3ceec8338ef6cd6b5bd57f6f4a21805d323087ffb1f59e02cc4ce",
+      "text_key": "составьте план и выполните его",
+      "text_digest": "80a0a93db3c1d60bf2e685edc4d780c6f5732ee7d61e7df2af857e0f1e9c3c4d",
+      "original_digest": "88f67258d0b0cc186e20b7c062780f40567d259c9550ca2e71485134902c39ae",
+      "photo_sha256": "cec986216388bce5a759a383d3d2cfee78f04fd44757894a7a67c6e513e26887",
+      "source_url": "https://www.aboutamazon.com/news/company-news/2018-letter-to-shareholders#:~:text=Put%20in%20place%20a%20plan%20and%20execute.",
+      "author": "Джефф Безос",
+      "theme": "первый шаг",
+      "reservation_id": "8086fac66c30062836d01355f67d1e42",
+      "run_id": "44976940739",
+      "slot": 166232,
+      "status": "reserved"
     }
   ]
 }
