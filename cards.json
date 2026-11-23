@@ -220,5 +220,100 @@
     "source_url": "https://home.dartmouth.edu/news/2024/06/2024-commencement-address-roger-federer",
     "theme": "смелость",
     "photo": "media/forehand-corner.jpg"
+  },
+  {
+    "title": "Услышать собственный голос",
+    "text": "Не позволяйте шуму чужих мнений заглушить ваш внутренний голос.",
+    "author": "Стив Джобс",
+    "original": "Don’t let the noise of others’ opinions drown out your own inner voice.",
+    "work": "Речь в Стэнфорде",
+    "source_url": "https://book.stevejobsarchive.com/#sid-1159",
+    "theme": "уверенность в своих силах",
+    "scene": "За окном проносится поезд, на раскрытом альбоме лежат карандаш и оранжевые защитные наушники.",
+    "photo": "media/quiet-sketchbook.jpg"
+  },
+  {
+    "title": "Куда держать курс",
+    "text": "Для того, кто не знает, к какой гавани держит путь, нет попутного ветра.",
+    "original": "When a man does not know what harbour he is making for, no wind is the right wind.",
+    "author": "Луций Анней Сенека",
+    "work": "Нравственные письма к Луцилию, 71, 3. Английский перевод Р. М. Гаммера",
+    "source_url": "https://github.com/standardebooks/seneca_moral-letters-to-lucilius_richard-m-gummere/blob/ec327173942702e9295cd6b5f2538c32169b3720/src/epub/text/letter-71.xhtml#L18",
+    "theme": "первый шаг",
+    "photo": "media/helm.jpg"
+  },
+  {
+    "title": "Утренний вопрос",
+    "text": "Что доброго я сделаю сегодня?",
+    "original": "What good shall I do this day?",
+    "author": "Бенджамин Франклин",
+    "source_url": "https://github.com/GITenberg/The-Autobiography-of-Benjamin-Franklin_148/blob/6a006405564a4927409f7a04ccae741e51e9ef70/148.txt#L3121-L3125",
+    "theme": "доброта в повседневной жизни",
+    "photo": "media/morning-delivery.jpg"
+  },
+  {
+    "title": "Цель над горизонтом",
+    "text": "Прицепи свою повозку к звезде.",
+    "original": "Hitch your wagon to a star.",
+    "author": "Ральф Уолдо Эмерсон",
+    "source_url": "https://emersoncentral.com/texts/society-and-solitude/civilization/#:~:text=Hitch%20your%20wagon%20to%20a%20star",
+    "theme": "смелость",
+    "photo": "media/stars.jpg"
+  },
+  {
+    "title": "Из любопытства",
+    "text": "Просто возясь с разными вещами, можно очень многому научиться.",
+    "author": "Генри Форд",
+    "original": "There is an immense amount to be learned simply by tinkering with things.",
+    "work": "My Life and Work",
+    "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt#L779-L780",
+    "theme": "первый шаг",
+    "scene": "На руле старого велосипеда раскрыт звонок. Медная крышка и отвёртка лежат рядом на деревянной табуретке.",
+    "photo": "media/open-bicycle-bell.jpg"
+  },
+  {
+    "title": "Один шаг из тысячи",
+    "text": "Путешествие в тысячу верст начинается с одного шага.",
+    "author": "Лао-цзы",
+    "work": "Мысли мудрых людей на каждый день, собрание Л. Н. Толстого",
+    "source_url": "https://github.com/tolstoydigital/TEI/blob/91b92a6b6fe77abbf2302e5654c02dc27ecfdb54/texts/works/v40_069_216_Mysli_mudryh_ljudej_na_kazhdyj_den.xml#L8349-L8355",
+    "theme": "первый шаг",
+    "photo": "media/cleared-path.jpg"
+  },
+  {
+    "title": "Зачем искать друзей",
+    "text": "Из всего, что мудрость даёт для счастья на всю жизнь, важнее всего — обрести друзей.",
+    "original": "Of all the means which are procured by wisdom to ensure happiness throughout the whole of life, by far the most important is the acquisition of friends.",
+    "author": "Эпикур",
+    "source_url": "https://classics.mit.edu/Epicurus/princdoc.html#123",
+    "theme": "дружба и поддержка",
+    "photo": "media/shelter.jpg"
+  },
+  {
+    "title": "Перед первым полётом",
+    "text": "Вот моё учение: хочешь летать — научись стоять, ходить, бегать, лазать, танцевать. Сразу не взлетишь!",
+    "original": "This however is my teaching: he who wisheth one day to fly, must first learn standing and walking and running and climbing and dancing:⁠—one doth not fly into flying!",
+    "author": "Фридрих Ницше",
+    "source_url": "https://standardebooks.org/ebooks/friedrich-nietzsche/thus-spake-zarathustra/thomas-common/text/single-page#chapter-55-2",
+    "theme": "первый шаг",
+    "photo": "media/sparrow.jpg"
+  },
+  {
+    "title": "Что может вода",
+    "text": "Нет ничего мягче и слабее воды, но в преодолении твёрдого и крепкого её ничем не заменить.",
+    "original": "There is nothing in the world more soft and weak than water, and yet for attacking things that are firm and strong there is nothing that can take precedence of it;⁠—for there is nothing (so effectual) for which it can be changed.",
+    "author": "Лао-цзы",
+    "source_url": "https://standardebooks.org/ebooks/laozi/tao-te-ching/james-legge/text/single-page#chapter-78-p-1",
+    "theme": "настойчивость",
+    "photo": "media/bells.jpg"
+  },
+  {
+    "title": "Цена промедления",
+    "text": "Пока мы откладываем, жизнь проходит.",
+    "author": "Сенека",
+    "original": "Dum differtur, vita transcurrit.",
+    "source_url": "https://scaife.perseus.org/reader/urn:cts:latinLit:phi1017.phi015.perseus-lat2:1.1.2/",
+    "theme": "внутренний мир",
+    "photo": "media/departing-train.jpg"
   }
 ]
