@@ -362,6 +362,21 @@
       "published_at": "2026-11-22T23:33:42Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "пока это лишь идея",
+      "title_digest": "ccedf5475eeceedd7ea425834f18951a89ab605280dabe97fc28e90fbcf45e10",
+      "text_key": "идею может придумать почти каждый важно превратить ее в работающий продукт",
+      "text_digest": "895692aeefd22335ad606bf73201a922fc7025029da74d83fb0fac07b7805ac8",
+      "original_digest": "fe0be843ebec6ec29bd0ca773600f37388a0f3f0ad74155dd2e69aa657d2be3c",
+      "photo_sha256": "44e052d4b7a80b59c8fd0f231a9ae9144cc97018908823ca01030c3ee8ee5fba",
+      "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt#L168",
+      "author": "Генри Форд",
+      "theme": "первый шаг",
+      "reservation_id": "44c9244764803352d05239e414c5541c",
+      "run_id": "45108989362",
+      "slot": 166240,
+      "status": "reserved"
     }
   ]
 }
