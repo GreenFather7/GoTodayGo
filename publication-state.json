@@ -381,6 +381,21 @@
       "published_at": "2026-11-23T03:58:41Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "бежать вместе",
+      "title_digest": "4a5edf63474bfce678da0b0fae82a70045cda1f6741d63505af2718ec2b95351",
+      "text_key": "спорт может вдохновлять дарить радость и объединять людей",
+      "text_digest": "575199a9d0cf1367d4422eb6f52d82e63dbcce47782a9d9290f26a43ecac9e80",
+      "original_digest": "243a29eac81e05567cda35667de1d6a3959f4d2ec84506837628041410019f2e",
+      "photo_sha256": "da025d498c76d452d27edf0c4f56ed231eefccde8fe4bcdbd0d3901086fa121d",
+      "source_url": "https://www.ineos159challenge.com/news/free-digital-education-resources-launched",
+      "author": "Элиуд Кипчоге",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "a52cbe8a2181a98744b4e682fb3228ac",
+      "run_id": "45124745280",
+      "slot": 166241,
+      "status": "reserved"
     }
   ]
 }
