@@ -400,6 +400,21 @@
       "published_at": "2026-11-23T06:32:26Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "туда где соперник силен",
+      "title_digest": "03034da9602444ab1aafba0c59d7d24763940d887c2c652e8e61f790de553562",
+      "text_key": "я обыгрывал звезд которыми восхищался атакуя именно там где они были сильнее всего",
+      "text_digest": "45a82fe1accf45b30d141134a377a290be4f4718354aa0f68ec60684c9597629",
+      "original_digest": "2b3457e266585c046da98efe76064fb994c2a64b9bc20529435bbeda049a4878",
+      "photo_sha256": "e9451c4508351bf98ee1d0f561decae2c80fceffcbddc58d6ed80b011c61f3b5",
+      "source_url": "https://home.dartmouth.edu/news/2024/06/2024-commencement-address-roger-federer",
+      "author": "Роджер Федерер",
+      "theme": "смелость",
+      "reservation_id": "c1aeac7b77536440490387dbe103dc4e",
+      "run_id": "45238799414",
+      "slot": 166245,
+      "status": "reserved"
     }
   ]
 }
