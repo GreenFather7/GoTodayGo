@@ -202,5 +202,23 @@
     "theme": "уверенность в своих силах",
     "scene": "На тренировочном марафоне ранним утром стол с многоразовыми стаканами воды тянется вдоль шоссе.",
     "photo": "media/race-water-station.jpg"
+  },
+  {
+    "title": "Радость на всех",
+    "text": "Находи время порадоваться большим победам и разделить их с семьёй и друзьями.",
+    "author": "Пит Сампрас",
+    "original": "Take time to appreciate your major wins and share them with your family and friends.",
+    "source_url": "https://www.theplayerstribune.com/articles/pete-sampras-letter-to-my-younger-self",
+    "theme": "уверенность в своих силах",
+    "photo": "media/trophy-at-home.jpg"
+  },
+  {
+    "title": "Туда, где соперник силён",
+    "text": "Я обыгрывал звёзд, которыми восхищался, атакуя именно там, где они были сильнее всего.",
+    "author": "Роджер Федерер",
+    "original": "I beat some top players I really admired—by aiming right at their strengths.",
+    "source_url": "https://home.dartmouth.edu/news/2024/06/2024-commencement-address-roger-federer",
+    "theme": "смелость",
+    "photo": "media/forehand-corner.jpg"
   }
 ]

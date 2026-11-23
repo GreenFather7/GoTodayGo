@@ -423,9 +423,16 @@ def scheduled(cards, archive, store, target_slot, run_id):
             if card is not None:
                 generated.append(card)
                 choice = choose_card(generated, state, archive, rank)
-        if choice is None:
-            print("Очередь новых карточек пуста.")
+        if current_slot() != target_slot:
+            print("Время этой публикации прошло.")
             return
+        if choice is None:
+            if not os.environ.get("OPENAI_API_KEY"):
+                raise RuntimeError("Пост не опубликован. В очереди нет подходящей карточки, "
+                                   "а секрет OPENAI_API_KEY недоступен. Добавьте карточку в cards.json "
+                                   "или настройте этот секрет в GitHub Actions для генерации.")
+            raise RuntimeError("Пост не опубликован. Нет нового проверенного материала для этого окна. "
+                               "Добавьте готовую карточку в cards.json или проверенную цитату в reserve.json.")
         bot_token()
         card, message, photo, mime, digest = choice
         reservation_id = secrets.token_hex(16)
@@ -433,9 +440,6 @@ def scheduled(cards, archive, store, target_slot, run_id):
             **identity(card, digest), "reservation_id": reservation_id, "run_id": run_id,
             "slot": target_slot, "status": "reserved",
         })
-        if current_slot() != target_slot:
-            print("Время этой публикации прошло.")
-            return
         try:
             store.write(state, sha, f"Reserve Telegram slot {target_slot}")
             break
