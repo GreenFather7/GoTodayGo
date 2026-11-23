@@ -26,10 +26,7 @@ def rich_upload(message):
     if not isinstance(blocks, list) or not all(isinstance(b, dict) for b in blocks):
         raise ValueError("Неверная структура сообщения.")
     types = [b.get("type") for b in blocks]
-    if types not in (
-        ["photo", "heading", "paragraph", "footer"],
-        ["photo", "heading", "paragraph", "paragraph", "footer"],
-    ):
+    if types != ["photo", "heading", "paragraph", "footer"]:
         raise ValueError("Проверьте порядок блоков поста.")
     photo = {"type": "photo", "media": "attach://photo"}
     if blocks[0] != {"type": "photo", "photo": photo}:

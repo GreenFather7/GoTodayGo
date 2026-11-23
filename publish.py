@@ -10,6 +10,7 @@ import re
 import secrets
 import subprocess
 import sys
+import time
 import unicodedata
 from collections import Counter
 from datetime import datetime, timezone
@@ -47,28 +48,19 @@ def render(post):
     source = urlsplit(post["source_url"].strip())
     if source.scheme != "https" or not source.hostname or source.username is not None:
         raise ValueError("Для источника нужна ссылка HTTPS.")
-    author = post.get("author", "")
-    if not isinstance(author, str):
+    if not isinstance(post.get("author", ""), str):
         raise ValueError("Имя автора должно быть строкой.")
+    if not isinstance(post.get("work", ""), str):
+        raise ValueError("Название источника должно быть строкой.")
     if not isinstance(post.get("theme", ""), str):
         raise ValueError("Тема карточки должна быть строкой.")
-    author = author.strip()
+    channel_link = {"type": "url", "text": "Сегодня тот самый день", "url": "https://t.me/GoTodayGo"}
     blocks = [
         {"type": "photo", "photo": {"type": "photo", "media": "attach://photo"}},
         {"type": "heading", "size": 1, "text": post["title"].strip()},
         {"type": "paragraph", "text": post["text"].strip()},
+        {"type": "footer", "text": ["🌏 ", channel_link]},
     ]
-    if author:
-        work = post.get("work", "")
-        if not isinstance(work, str):
-            raise ValueError("Название источника должно быть строкой.")
-        credit = f"{author}, {work.strip()}" if work.strip() else author
-        if post.get("original"):
-            credit += " · перевод"
-        author_link = {"type": "url", "text": credit, "url": post["source_url"].strip()}
-        blocks.append({"type": "paragraph", "text": ["©️ ", author_link]})
-    channel_link = {"type": "url", "text": "Сегодня тот самый день", "url": "https://t.me/GoTodayGo"}
-    blocks.append({"type": "footer", "text": ["🌏 ", channel_link]})
     return {"blocks": blocks}
 
 
@@ -100,13 +92,27 @@ def bot_token():
     return token
 
 
+class AlreadyCurrent(RuntimeError):
+    """Telegram explicitly confirmed this edit would leave the message identical."""
+
+
 class UnverifiedMessage(RuntimeError):
     def __init__(self, receipt, reason):
         super().__init__(f"Сообщение {receipt['message_id']} в канале. {reason}")
         self.receipt = receipt
 
 
-def send(rich_message, photo, media_type, *, edit_id=None):
+def visible_text(value):
+    if isinstance(value, str):
+        return value
+    if isinstance(value, list):
+        return "".join(visible_text(part) for part in value)
+    if isinstance(value, dict):
+        return visible_text(value.get("text"))
+    return ""
+
+
+def send(rich_message, photo, media_type, *, edit_id=None, repair_rendition=True):
     from photo_receipt import verify_photo
 
     token = bot_token()
@@ -115,10 +121,11 @@ def send(rich_message, photo, media_type, *, edit_id=None):
     method = "sendRichMessage"
     filename = f"card{photo.suffix.lower()}"
     if edit_id is not None:
-        from PIL import Image, ImageOps
-
         fields["message_id"] = str(edit_id)
         method = "editMessageText"
+    if edit_id is not None and repair_rendition:
+        from PIL import Image, ImageOps
+
         # Telegram treats a byte-identical upload as a no-op when editing the same post.
         with Image.open(photo) as source:
             upload = ImageOps.exif_transpose(source).convert("RGB")
@@ -156,7 +163,9 @@ def send(rich_message, photo, media_type, *, edit_id=None):
         except (ValueError, AttributeError):
             description = ""
         if isinstance(description, str):
-            for detail in ("message is not modified", "message can't be edited", "message to edit not found",
+            if edit_id is not None and exc.code == 400 and "message is not modified" in description.lower():
+                raise AlreadyCurrent(f"Telegram: сообщение {edit_id} уже совпадает с переданной версией.") from None
+            for detail in ("message can't be edited", "message to edit not found",
                            "not enough rights", "can't parse", "wrong file identifier"):
                 if detail in description.lower():
                     raise RuntimeError(f"Telegram {method}: {detail} (HTTP {exc.code}).") from None
@@ -190,6 +199,11 @@ def send(rich_message, photo, media_type, *, edit_id=None):
                     or [b.get("type") for b in blocks] != [b["type"] for b in rich_message["blocks"]]
                     or blocks[1].get("size") != 1):
                 raise UnverifiedMessage(receipt, "Telegram не подтвердил формат карточки.")
+            if edit_id is not None and any(
+                visible_text(actual.get("text")).split() != visible_text(expected["text"]).split()
+                for actual, expected in zip(blocks[1:], rich_message["blocks"][1:])
+            ):
+                raise UnverifiedMessage(receipt, "Telegram вернул другой текст карточки.")
             try:
                 width, height = verify_photo(blocks, photo, token)
             except RuntimeError as error:
@@ -444,12 +458,10 @@ def scheduled(cards, archive, store, target_slot, run_id):
     record_outcome(store, reservation_id, "sent", receipt)
 
 
-def repair_photo(cards, store, message_id):
-    state, _ = store.read()
-    matches = [e for e in state["entries"] if e.get("message_id") == message_id
-               and e["status"] in {"sent", "uncertain"}]
-    if len(matches) != 1:
-        raise ValueError("Для этого сообщения в журнале нужна одна подтверждённая запись с его номером.")
+def historical_card(cards, state, message_id, statuses):
+    matches = [e for e in state["entries"] if e.get("message_id") == message_id]
+    if len(matches) != 1 or matches[0]["status"] not in statuses:
+        raise ValueError(f"В журнале нет единственной записи с нужным статусом для сообщения {message_id}.")
     entry = matches[0]
     for card in cards:
         if (key_text(card["title"]), key_text(card["text"])) != (entry["title_key"], entry["text_key"]):
@@ -457,10 +469,14 @@ def repair_photo(cards, store, message_id):
         photo, mime = photo_file(card)
         if hashlib.sha256(photo.read_bytes()).hexdigest() != entry["photo_sha256"]:
             continue
-        receipt = send(render(card), photo, mime, edit_id=message_id)
-        break
-    else:
-        raise ValueError("Исходная карточка с этим текстом и изображением не найдена.")
+        return entry, render(card), photo, mime
+    raise ValueError(f"Исходный текст и файл фотографии для сообщения {message_id} не найдены.")
+
+
+def repair_photo(cards, store, message_id):
+    state, _ = store.read()
+    entry, message, photo, mime = historical_card(cards, state, message_id, {"sent", "uncertain"})
+    receipt = send(message, photo, mime, edit_id=message_id)
     for _ in range(3):
         state, sha = store.read()
         current = next((e for e in state["entries"] if e.get("message_id") == message_id), None)
@@ -476,16 +492,44 @@ def repair_photo(cards, store, message_id):
     raise RuntimeError("Telegram подтвердил фотографию, но запись проверки в журнал не удалась.")
 
 
+def refresh_text(cards, store, message_ids):
+    if not re.fullmatch(r"[1-9][0-9]*(?:(?:\s*,\s*|\s+)[1-9][0-9]*)*", message_ids.strip()):
+        raise ValueError("Укажите положительные номера сообщений через запятую или пробел.")
+    ids = list(dict.fromkeys(int(value) for value in re.findall(r"[0-9]+", message_ids)))
+    state, _ = store.read()
+    targets = [historical_card(cards, state, message_id, {"sent"}) for message_id in ids]
+    errors = []
+    for index, (entry, message, photo, mime) in enumerate(targets):
+        message_id = entry["message_id"]
+        if index:
+            time.sleep(3.1)
+        repaired = max(entry.get("photo_width") or 0, entry.get("photo_height") or 0) == 1200
+        try:
+            send(message, photo, mime, edit_id=message_id, repair_rendition=repaired)
+        except AlreadyCurrent as same:
+            print(same)
+        except (OSError, ValueError, RuntimeError) as error:
+            errors.append(str(message_id))
+            print(f"Не подтверждено обновление сообщения {message_id}: {error}", file=sys.stderr, flush=True)
+    if errors:
+        raise RuntimeError("Нужно проверить сообщения " + ", ".join(errors))
+    print("Обработка завершена для сообщений " + ", ".join(map(str, ids)))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     action = parser.add_mutually_exclusive_group()
     action.add_argument("--send", action="store_true", help="send the scheduled post")
     action.add_argument("--repair-photo", type=int, metavar="MESSAGE_ID", help="restore a published card in place")
+    action.add_argument("--refresh-text", metavar="IDS", help="refresh the text of confirmed existing posts in place")
     parser.add_argument("--created-at", help="UTC creation time of the scheduled workflow run")
     args = parser.parse_args()
     cards = json.loads(CATALOG.read_text(encoding="utf-8"))
     if not isinstance(cards, list):
         raise ValueError("Ожидается очередь карточек в cards.json.")
+    if args.refresh_text is not None:
+        refresh_text(cards, RepositoryState(), args.refresh_text)
+        return
     if args.repair_photo is not None:
         if args.repair_photo <= 0:
             parser.error("--repair-photo requires a positive message ID")

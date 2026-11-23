@@ -17,12 +17,16 @@ on:
         description: 'Исправить фото в существующем посте по номеру сообщения'
         type: string
         required: false
+      refresh_text:
+        description: 'Обновить текст существующих постов по номерам через запятую'
+        type: string
+        required: false
 
 permissions: {}
 
 jobs:
   preview:
-    if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot && inputs.repair_photo == ''
+    if: github.event_name == 'workflow_dispatch' && !inputs.recover_current_slot && inputs.repair_photo == '' && inputs.refresh_text == ''
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -52,9 +56,9 @@ jobs:
       github.event.workflow_run.path == '.github/workflows/measure.yml' &&
       github.event.workflow_run.head_repository.full_name == github.repository &&
       github.event.workflow_run.head_branch == 'main') ||
-      (github.event_name == 'workflow_dispatch' && (inputs.recover_current_slot || inputs.repair_photo != '')))
+      (github.event_name == 'workflow_dispatch' && (inputs.recover_current_slot || inputs.repair_photo != '' || inputs.refresh_text != '')))
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: ${{ inputs.refresh_text != '' && 40 || 12 }}
     permissions:
       contents: write
       actions: read
@@ -67,7 +71,7 @@ jobs:
           persist-credentials: false
       - name: Проверить окно по журналу
         id: window
-        if: ${{ !inputs.repair_photo }}
+        if: ${{ !inputs.repair_photo && !inputs.refresh_text }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -85,20 +89,28 @@ jobs:
           print("open=" + str(target == current_slot() and not occupied).lower())
           PY
       - name: Подготовить проверку изображений
-        if: inputs.repair_photo || steps.window.outputs.open == 'true'
+        if: inputs.repair_photo || inputs.refresh_text || steps.window.outputs.open == 'true'
         run: |
           python3 -m venv "$RUNNER_TEMP/telegram-photo"
           "$RUNNER_TEMP/telegram-photo/bin/pip" install --disable-pip-version-check --only-binary=:all: Pillow==13.0.0
       - name: Отправить или исправить карточку
-        if: inputs.repair_photo || steps.window.outputs.open == 'true'
+        if: inputs.repair_photo || inputs.refresh_text || steps.window.outputs.open == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           REPAIR_PHOTO: ${{ inputs.repair_photo }}
+          REFRESH_TEXT: ${{ inputs.refresh_text }}
+          RECOVER_CURRENT_SLOT: ${{ inputs.recover_current_slot }}
           CREATED_AT: ${{ steps.window.outputs.created_at }}
         run: |
-          if [[ -n "$REPAIR_PHOTO" ]]; then
+          if [[ -n "$REFRESH_TEXT" ]]; then
+            if [[ -n "$REPAIR_PHOTO" || "$RECOVER_CURRENT_SLOT" == "true" ]]; then
+              echo "Выберите обновление текста отдельно от восстановления." >&2
+              exit 2
+            fi
+            "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --refresh-text "$REFRESH_TEXT"
+          elif [[ -n "$REPAIR_PHOTO" ]]; then
             "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --repair-photo "$REPAIR_PHOTO"
           else
             "$RUNNER_TEMP/telegram-photo/bin/python" publish.py --send --created-at "$CREATED_AT"
