@@ -419,6 +419,21 @@
       "published_at": "2026-11-23T18:28:51Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "радость на всех",
+      "title_digest": "f79f1bcc338cfd7fb3c4e043f786edc6cf0950a7d417f6848b7954f634202b16",
+      "text_key": "находи время порадоваться большим победам и разделить их с семьей и друзьями",
+      "text_digest": "68a421c59fca849ec4ea7268a94a2a70d7d531ae2061dc65dd16b683e36091d2",
+      "original_digest": "a05af2b9b18f4d62ebdead23769c6d0f5044546682b51c0423185a2e675babe4",
+      "photo_sha256": "8953babbb29b0765005fa742102767e69b3c3bd266dc5a23cb5689c439d87230",
+      "source_url": "https://www.theplayerstribune.com/articles/pete-sampras-letter-to-my-younger-self",
+      "author": "Пит Сампрас",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "c183f88b8611ca2aca7717c05a572671",
+      "run_id": "45308155815",
+      "slot": 166248,
+      "status": "reserved"
     }
   ]
 }
