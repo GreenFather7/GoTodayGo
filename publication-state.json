@@ -457,6 +457,21 @@
       "published_at": "2026-11-24T12:22:22Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "утренний вопрос",
+      "title_digest": "6e654bb71a52ccec7d5c39f71f91f77e5cfc39f88db2b577b5ee405a92cf5da4",
+      "text_key": "что доброго я сделаю сегодня",
+      "text_digest": "aa298c2097ef89223a48963210cb404eb84bfc14818907749195e8e13b30eb45",
+      "original_digest": "aa832a215253bdd8d7d29d14ab3813f0a92ff107edd4e33992d65f5209de0a09",
+      "photo_sha256": "9ce286c49b3dc4cd49537ded6bac234157c8e0e7b58414b391abba28b0166ebe",
+      "source_url": "https://github.com/GITenberg/The-Autobiography-of-Benjamin-Franklin_148/blob/6a006405564a4927409f7a04ccae741e51e9ef70/148.txt#L3121-L3125",
+      "author": "Бенджамин Франклин",
+      "theme": "доброта в повседневной жизни",
+      "reservation_id": "f9144db67cad2a7d21ec7134232885ee",
+      "run_id": "45418811499",
+      "slot": 166252,
+      "status": "reserved"
     }
   ]
 }
