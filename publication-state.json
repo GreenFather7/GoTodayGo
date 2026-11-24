@@ -438,6 +438,21 @@
       "published_at": "2026-11-24T01:51:58Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "услышать собственный голос",
+      "title_digest": "dfb383eeaa20fc1500c3e565f96d1dfe7f89a0983d03b2fff128d695e37754dc",
+      "text_key": "не позволяйте шуму чужих мнений заглушить ваш внутренний голос",
+      "text_digest": "d0974a4ffdc995bc9622b4713b490ed8990cfe8c903ac9c50137d91581f50ff8",
+      "original_digest": "aa7b6916d97e30a29c24a5d4f55e5d57f9896457ce1ecb25c7419d2716de1937",
+      "photo_sha256": "4db471fd34fe39ddc92e8658b24a190aee1378dd85196bfbb7d9de6bc7d3ffb6",
+      "source_url": "https://book.stevejobsarchive.com/#sid-1159",
+      "author": "Стив Джобс",
+      "theme": "уверенность в своих силах",
+      "reservation_id": "e516f7292b85dfadf653be64808fbd37",
+      "run_id": "45392825077",
+      "slot": 166251,
+      "status": "reserved"
     }
   ]
 }
