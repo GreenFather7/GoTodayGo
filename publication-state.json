@@ -476,6 +476,21 @@
       "published_at": "2026-11-24T14:51:55Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "куда держать курс",
+      "title_digest": "fc2757dadbaf7faa2a70e1813a9451819584836550250c94238d2b8acffb74af",
+      "text_key": "для того кто не знает к какой гавани держит путь нет попутного ветра",
+      "text_digest": "92da3a2408a40cbc602c2a5670f0fcf8aee6add8181c34f2d92ed339a83d65cd",
+      "original_digest": "a92efce24b8dc238f4d646360c29e99d5c27a8aa8218384b9c912d26d52377e8",
+      "photo_sha256": "3020c86d615860dd14c5f21f82aec1780f40f62634e977a611916f45cebbcc6f",
+      "source_url": "https://github.com/standardebooks/seneca_moral-letters-to-lucilius_richard-m-gummere/blob/ec327173942702e9295cd6b5f2538c32169b3720/src/epub/text/letter-71.xhtml#L18",
+      "author": "Луций Анней Сенека",
+      "theme": "первый шаг",
+      "reservation_id": "73bcca341cb0ab3975c9abd52e99b7b7",
+      "run_id": "45503657358",
+      "slot": 166255,
+      "status": "reserved"
     }
   ]
 }
