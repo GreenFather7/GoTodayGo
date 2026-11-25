@@ -495,6 +495,21 @@
       "published_at": "2026-11-24T22:44:15Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "цель над горизонтом",
+      "title_digest": "813c0e2a144ea5c2ed12beab37b5b016cfe65e8e78243a3d0fbc43f042a306e3",
+      "text_key": "прицепи свою повозку к звезде",
+      "text_digest": "e380de8e0064bb775b8ecb04850767d7b9930dceaea7e16766068edb77ed54fb",
+      "original_digest": "c47dcafb43b7facc27ff896b71d250555b028a9e4c95296d0e9311570e33e744",
+      "photo_sha256": "1725f1bc894fdf82e450a38fe5d45dcac6843e05c7cf95e42bd4e3f223f030eb",
+      "source_url": "https://emersoncentral.com/texts/society-and-solitude/civilization/#:~:text=Hitch%20your%20wagon%20to%20a%20star",
+      "author": "Ральф Уолдо Эмерсон",
+      "theme": "смелость",
+      "reservation_id": "d8905247aaf45716f18d62a2e2af8b4c",
+      "run_id": "45553277499",
+      "slot": 166257,
+      "status": "reserved"
     }
   ]
 }
