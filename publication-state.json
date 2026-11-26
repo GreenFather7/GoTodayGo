@@ -533,6 +533,20 @@
       "published_at": "2026-11-26T00:13:23Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "один шаг из тысячи",
+      "title_digest": "b28ab5a0d18fa7276c3b3d7cb4f26be80d9d90ce82d8691fb293ba21bc2be356",
+      "text_key": "путешествие в тысячу верст начинается с одного шага",
+      "text_digest": "42e2d1ca441bf8cb75681567a9b947c1e9c6ecec27d4734319516a4348445097",
+      "photo_sha256": "4b95b17fe00a4be1ceb796c3e3b047080178f0ae0fdeff00c90cfcd6a5f2a6fb",
+      "source_url": "https://github.com/tolstoydigital/TEI/blob/91b92a6b6fe77abbf2302e5654c02dc27ecfdb54/texts/works/v40_069_216_Mysli_mudryh_ljudej_na_kazhdyj_den.xml#L8349-L8355",
+      "author": "Лао-цзы",
+      "theme": "первый шаг",
+      "reservation_id": "adc514ad2718f87fca155c7cf64f1d85",
+      "run_id": "45785596582",
+      "slot": 166266,
+      "status": "reserved"
     }
   ]
 }
