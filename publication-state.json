@@ -514,6 +514,21 @@
       "published_at": "2026-11-25T05:24:04Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "из любопытства",
+      "title_digest": "3cce2b21dc62a2fc7f82be164826cbfd96919c03a13beeaa1f64bfd433151597",
+      "text_key": "просто возясь с разными вещами можно очень многому научиться",
+      "text_digest": "a382597633562fc0d90ce3272cb53cc854f2ebb904347ea16baa08fd3dd0a25f",
+      "original_digest": "635ebf7a6762ecb032c5923f06b4caa81fd914afcde81449db6442a5eee71b22",
+      "photo_sha256": "539b8c220959f7f51fdfded48b1200092c1a864b5d755a777ffd5460aa88aa9e",
+      "source_url": "https://github.com/GITenberg/My-Life-and-Work_7213/blob/4f8952c42ef1eeb2ba2249c97a30625783574460/7213.txt#L779-L780",
+      "author": "Генри Форд",
+      "theme": "первый шаг",
+      "reservation_id": "2bc93f62e8f49cd57be357a808a79316",
+      "run_id": "45727146669",
+      "slot": 166263,
+      "status": "reserved"
     }
   ]
 }
