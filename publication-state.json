@@ -551,6 +551,21 @@
       "published_at": "2026-11-26T08:43:50Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "зачем искать друзей",
+      "title_digest": "109b616e6551ec61e01a1b8a65f43d810e2dd15191198e1f1454a56525b9bbea",
+      "text_key": "из всего что мудрость дает для счастья на всю жизнь важнее всего обрести друзей",
+      "text_digest": "8607e57441221808f6de0a08d6b067f083dfd040d98b785a2106b4be46ccae3a",
+      "original_digest": "723d2cdc62df50add17ad15b052abe25cf18685ab3daf759dac4bdcf70830cab",
+      "photo_sha256": "35c3c544bf91a77be22fa9b5b74aacd8cf533e598798729a3d2a45d0c206a68f",
+      "source_url": "https://classics.mit.edu/Epicurus/princdoc.html#123",
+      "author": "Эпикур",
+      "theme": "дружба и поддержка",
+      "reservation_id": "7037bbe0c4ef997a8ec26a556882e463",
+      "run_id": "45877536044",
+      "slot": 166269,
+      "status": "reserved"
     }
   ]
 }
