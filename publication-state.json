@@ -589,6 +589,21 @@
       "published_at": "2026-11-27T01:56:24Z",
       "photo_width": 1254,
       "photo_height": 1254
+    },
+    {
+      "title_key": "что может вода",
+      "title_digest": "f07e040cfe9f7a682d423475ee419ce8d799fda539bdd4bef44e8deba27f8355",
+      "text_key": "нет ничего мягче и слабее воды но в преодолении твердого и крепкого ее ничем не заменить",
+      "text_digest": "bd9ab40a42cd64e1df541d6ed476d508f2527f4f1f33d6aacae28627d0ad4730",
+      "original_digest": "3330a1011e33d91b17eeeb81e0e20879ed46d1f89c0439cbfb5621c9a811b096",
+      "photo_sha256": "855786f4bce7be1023a666c2d2617c0e804db90f99cd1c73f9690bbe3d773744",
+      "source_url": "https://standardebooks.org/ebooks/laozi/tao-te-ching/james-legge/text/single-page#chapter-78-p-1",
+      "author": "Лао-цзы",
+      "theme": "настойчивость",
+      "reservation_id": "a4850a31b8693ea7ce0cc983e3502856",
+      "run_id": "45982493359",
+      "slot": 166275,
+      "status": "reserved"
     }
   ]
 }
