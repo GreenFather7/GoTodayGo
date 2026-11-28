@@ -161,7 +161,13 @@
     },
     "3542": {
       "slot": 166275,
-      "published_at": "2026-11-27T10:29:27Z"
+      "published_at": "2026-11-27T10:29:27Z",
+      "measurement": {
+        "observed_at": "2026-11-28T10:50:31Z",
+        "views": 930,
+        "resolution": 1,
+        "label": "930"
+      }
     },
     "3543": {
       "slot": 166278,
